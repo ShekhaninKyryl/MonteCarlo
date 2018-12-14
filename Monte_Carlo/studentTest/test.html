@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <link rel="stylesheet" type="text/css" href="mail.css">
+
+
+    <div id="content">
+        <div id="grahs">
+            <div id="leftValue"></div>
+            <div id="Space">
+            </div>
+
+        </div>
+
+        <div id="inputDiv">
+            <form style="display: inline; text-align:right; margin: 2px">
+                <div style="width:50%;right:0%">
+                    <div class="input">
+                        Student knowledge:
+                        <input type="number"  value="0.5" max="1" min="0" step="0.1" id="studK" />
+                    </div>
+                    <div class="input">
+                        Student confidence:
+                        <input type="number"  value="0.5" max="1" min="0" step="0.1" id="studQ" />
+                    </div>
+
+                    <div class="input">
+                        Number of questions:
+                        <input type="number"  value="100" min="0" step="10" id="testN" />
+                    </div>
+                    <div class="input">
+                        Probability to guess:
+                        <input type="number"  value="0.25" max="1" min="0" step="0.1" id="testP" />
+                    </div >
+
+                    <div class="input">
+                        Number of Students:
+                        <input type="number"  value="1000" min="0" step="100" id="studN" />
+                    </div>
+                    <div class="input">
+                        <input type="button"  value="Get results" style="width:50%" id="button" />
+                    </div>
+                </div>
+                <div style="width:50%; left:0%; text-align:left">
+                    <div class="input">
+                        <input type="checkbox" id="GistoType" name="checktype" value="checktype"  style="width:auto" />
+                        <label for="GistoType">:Full-mode Gistogram</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="table"></div>
+
+    <script src="StudentStatistics.js"></script>
+    <script >
+        window.Evaluation.addEventListener('click', function () {
+            Evaluation.toLarge = (!Evaluation.toLarge);
+            console.log(`Evaluation: ${Evaluation.toLarge}`);
+            test.sorResultTest(true, Evaluation.toLarge);
+            Interface.RewriteTable('table', test);
+            Interface.RewriteGistogram('Space', 'leftValue', GistoType.checked);
+
+        });
+        window.Numbers.addEventListener('click', function () {
+            Numbers.toLarge = (!Numbers.toLarge);
+            console.log(`Numbers: ${Numbers.toLarge}`);
+            test.sorResultTest(false, Numbers.toLarge);
+            Interface.RewriteTable('table', test);
+            Interface.RewriteGistogram('Space', 'leftValue', GistoType.checked);
+        });
+        window.GistoType.addEventListener('click', function () {
+            Interface.RewriteGistogram('Space', 'leftValue', GistoType.checked);
+        })
+        window.button.addEventListener('click', function () {
+            test = new Test(studK.value, studQ.value, testN.value, testP.value);
+            test.getResultTest(studN.value);
+            test.sorResultTest();
+            console.log(studK.value, studQ.value, testN.value, testP.value, studN.value)
+            Interface.RewriteTable('table', test);
+
+            Interface.RewriteGistogram('Space', 'leftValue', GistoType.checked);
+            console.log(test.maxValue);
+        })
+
+
+    </script>
+
+</body >
+</html >
